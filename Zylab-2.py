@@ -1,1 +1,0 @@
-userNum = int(intput())
