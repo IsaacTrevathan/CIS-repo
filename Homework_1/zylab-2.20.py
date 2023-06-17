@@ -44,15 +44,15 @@ print('\n\nLemonade ingredients - yields', '{:.2f}'.format(num_Total_Servings), 
 
 
 # prints the amount of lemon juice cups for the total servings amount
-print('{:.2f}'.format((num_Total_Servings/num_Servings)* num_Lemon), 'cup(s) lemon juice')
+print('{:.2f}'.format((num_Total_Servings/num_Servings) * num_Lemon), 'cup(s) lemon juice')
 
 
 # prints the amount of water cups for the total servings amount
-print('{:.2f}'.format((num_Total_Servings/num_Servings)* num_Water), 'cup(s) water')
+print('{:.2f}'.format((num_Total_Servings/num_Servings) * num_Water), 'cup(s) water')
 
 
 # prints the amount of agave nectar cups for the total servings amount
-print('{:.2f}'.format((num_Total_Servings/num_Servings)* num_Agave), 'cup(s) agave nectar')
+print('{:.2f}'.format((num_Total_Servings/num_Servings) * num_Agave), 'cup(s) agave nectar')
 
 
 # prints the amount of total servings
@@ -60,12 +60,12 @@ print('\nLemonade ingredients - yields', '{:.2f}'.format(num_Total_Servings), 's
 
 
 # prints the amount of lemon juice gallons for the total servings amount
-print('{:.2f}'.format(((num_Total_Servings/num_Servings)* num_Lemon)/16), 'gallon(s) lemon juice')
+print('{:.2f}'.format(((num_Total_Servings/num_Servings) * num_Lemon)/16), 'gallon(s) lemon juice')
 
 
 # prints the amount of water gallons for the total servings amount
-print('{:.2f}'.format(((num_Total_Servings/num_Servings)* num_Water)/16),'gallon(s) water')
+print('{:.2f}'.format(((num_Total_Servings/num_Servings) * num_Water)/16), 'gallon(s) water')
 
 
 # prints the amount of agave nectar gallons for the total servings amount
-print('{:.2f}'.format(((num_Total_Servings/num_Servings)* num_Agave)/16), 'gallon(s) agave nectar')
+print('{:.2f}'.format(((num_Total_Servings/num_Servings) * num_Agave)/16), 'gallon(s) agave nectar')

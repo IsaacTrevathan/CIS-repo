@@ -2,7 +2,7 @@
 # 1955674
 
 # creates directory of services that can be chosen
-Services = {'Oil change': 35 , 'Tire rotation': 19, 'Car wash': 7, 'Car wax': 12, '-': 'No service' }
+Services = {'Oil change': 35, 'Tire rotation': 19, 'Car wash': 7, 'Car wax': 12, '-': 'No service'}
 
 # outputs the shop services title
 print('Davy\'s auto shop services')
@@ -36,7 +36,7 @@ print('\n\nDavy\'s auto shop invoice')
 
 # if statement for the value of Oil change choice. Prints out choice and value for the 1st service
 if Service_choice_1 == 35:
-    print('\nService 1: Oil change,','${:.0f}'.format(Services['Oil change']) )
+    print('\nService 1: Oil change,', '${:.0f}'.format(Services['Oil change']))
 
 # else if statement for the value of Tire rotation choice. Prints out choice and value for the 1st service
 elif Service_choice_1 == 19:
@@ -56,7 +56,7 @@ elif Service_choice_1 == 'No service':
 
 # if statement for the value of Oil change choice. Prints out choice and value for the 2nd service
 if Service_choice_2 == 35:
-    print('Service 2: Oil change,','${:.0f}'.format(Services['Oil change']) )
+    print('Service 2: Oil change,', '${:.0f}'.format(Services['Oil change']))
 
 # else if statement for the value of Tire rotation choice. Prints out choice and value for the 2nd service
 elif Service_choice_2 == 19:
