@@ -334,7 +334,7 @@ def format_checker(input_list):
 
 
 # opens file inputDates.txt and enters the contents into string user_content
-with open('inputDates.txt', 'r') as my_file:
+with open('/Users/isaac/Desktop/DIS.txt', 'r') as my_file:
     user_content = my_file.read()
 
 
@@ -413,8 +413,7 @@ split_string = []
 
 # sets i equal to zero
 i = 0
-negative = user_content.find('-1')
-print(negative)
+
 # while loop that continues for each of the 12 months
 while i < len(months):
 
@@ -463,12 +462,7 @@ while i < len(months):
 
         # calls the end_finder function to find the end of the
         # sets where to the location where the found word ends in the string
-        print('where', where)
-        print(negative)
-
         where = end_finder(input_length, new_user_input, months[i])
-        if where > negative:
-            break
 
     # iterates i
     i += 1
