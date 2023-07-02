@@ -11,6 +11,7 @@ my_dictionary = {'January': 31, 'February': 28, 'March': 31, 'April': 30, 'May':
 
 # defines a function word finder for searching a string for the date, and editing the format of the date
 def word_finder(line, word):
+
     # creates variable k for loop
     k = 0
 
@@ -37,6 +38,7 @@ def word_finder(line, word):
 
             # checks if the character before the start of the argument 'word' is a space
             if not line[word_location - 1].isspace():
+
                 # sets first_word to '0' if the character before 'word' is a space
                 first_word = '0'
 
@@ -63,6 +65,7 @@ def word_finder(line, word):
 
                 # adds the different characters of second_word into a list if the character is not a comma
                 if second_word[k] != ',':
+
                     # adds k to second_word_list
                     second_word_list.append(second_word[k])
 
@@ -78,23 +81,23 @@ def word_finder(line, word):
         # creates a new string that starts at the next word of new_string_2
         new_string_3 = new_string_2[space_location_2 + 1:]
 
-        # sets third word to new_string_3 to the first 4 characters
+        # sets third_word equal to the first for characters of new_string_3
         third_word = new_string_3[:4]
+
         # sets new_second_word_number equal new_second_word to be changed into an integer later
         new_second_word_number = new_second_word
 
         # sets k equal to zero
         k = 0
 
+        # sets new_third_word equal to third_word
         new_third_word = third_word
 
-        # while loop that checks the new_third_word for characters that are not a digit
+        # while loop that checks the third_word for characters that are not a digit
         while k < len(new_third_word):
 
-            # sets new_third_word to '0' if there is character that is not a digit
+            # sets third_word to '0' if there is character that is not a digit
             if not new_third_word[k].isdigit():
-
-                # sets new_third_word to '0' if a character that is not a digit is found
                 new_third_word = '0'
             k += 1
 
@@ -103,8 +106,9 @@ def word_finder(line, word):
 
         # checks if first word is equal to 'word' and checks if new_second_word_number is in the range of possible dates
         # checks if third_word_number is in the range of the possible years
-        if first_word == word and 0 < int(new_second_word_number) < my_dictionary[word] and \
+        if first_word == word and 0 < int(new_second_word_number) < my_dictionary[word] and\
                 0 < int(third_word_number) <= today_year_int:
+
             # adds first_word to final_line
             final_line.append(first_word)
 
@@ -116,6 +120,23 @@ def word_finder(line, word):
 
     # returns the final line
     return final_line
+
+
+# function that finds a word in a string and then returns the location in the string where the word ends
+def end_finder(line_size, line, word):
+
+    # finds the location of the start of the word in the string
+    word_location = line.find(word)
+
+    # if the word_location is not empty it sets word_end equal to the location of the end of the word
+    if word_location != -1:
+        word_end = word_location + len(word)
+
+        # returns word end if word_location is not empty
+        return word_end
+    else:
+        # returns the size of the original line if word_location is empty
+        return line_size
 
 
 # function to split a string based on spaces
@@ -258,6 +279,65 @@ def find_month(string, my_months):
     return location
 
 
+def format_checker(input_list):
+
+    # if split_string is an empty list it sets it equal to a list with 3 zeros ast elements
+    if not input_list:
+        input_list = [0, 0, 0]
+
+    # checks if the first element of split_string is in the list of months
+    # checks if the second element of split_string is in the range of possible days
+    # checks if the third element of split_string is less than or equal to current year
+    # checks if found is not zero or less
+    if input_list[0] in months and int(input_list[1]) < 32 and int(input_list[2]) <= today_year_int:
+
+        # if statement that occurs if the year found is less than the current year
+        if int(input_list[2]) < today_year_int:
+
+            # sets first element of split_string to the corresponding number with zeros added to single digits
+            input_list[0] = user_month_value
+
+            # sets second element of split_string to the corresponding number with zeros added to single digits
+            # uses the value of split_string[1] as index to find number. subtracts 1 because index of list starts at 0
+            input_list[1] = days_zeros[int(input_list[1]) - 1]
+
+            # sets third element of split_string to the corresponding number, zeros added to years less than 4 digits
+            # uses the value of split_string[2] as index to find number. subtracts 1 because index of list starts at 0
+            input_list[2] = years_zeros[int(input_list[2]) - 1]
+
+            # joins the elements of split string into as string called join_string
+            join_string = join(input_list)
+
+            # adds the string join_string to the list string_list for final output
+            string_list.append(join_string)
+
+        # if statement that occurs when the year is equal to the current year
+        # checks if the month and day found are less than or equal to the current month and day
+        elif int(input_list[2]) == today_year_int and found_month_digit <= today_month_int and \
+                int(input_list[1]) <= today_day_int:
+
+            # sets first element of split_string to the corresponding number with zeros added to single digits
+            input_list[0] = user_month_value
+
+            # sets second element of split_string to the corresponding number with zeros added to single digits
+            # uses the value of split_string[1] as index to find number. subtracts 1 because index of list starts at 0
+            input_list[1] = days_zeros[int(input_list[1]) - 1]
+
+            # joins the elements of split string into as string called join_string
+            # the third element of split_string is left unchanged
+            # this is because if statement already checks that the third element is equal to the current year
+            join_string = join(split_string)
+
+            # adds join_string to the list string_list for final output
+            string_list.append(join_string)
+    # sets found back to zero to be used in next loop iteration
+
+
+# opens file inputDates.txt and enters the contents into string user_content
+with open('/Users/isaac/Desktop/DIS.txt', 'r') as my_file:
+    user_content = my_file.read()
+
+
 # sets time to the date and time of today
 time = datetime.today()
 
@@ -326,22 +406,26 @@ found = 0
 today_month_digit = 0
 
 # empty string join_string that will be used to put day month and year into a string together
-join_string = ''
+
 
 # empty list split_string that will be used to hold and check the correct ranges of the day month and year
 split_string = []
 
-# while loop that gets input from a user string until the user enters '-1'
-while user_input != '-1':
+# sets i equal to zero
+i = 0
+negative = user_content.find('-1')
+print(negative)
+# while loop that continues for each of the 12 months
+while i < len(months):
 
-    # sets i equal to zero
-    i = 0
+    # sets where equal to zero to be used later to locate the end of a found word
+    where = 0
 
-    # gets user input string into user_input
-    user_input = input('Enter input (-1 to exit)')
+    # sets new_user_input equal to the user_content
+    new_user_input = user_content
 
-    # while loop that continues for each of the 12 months
-    while i < len(months):
+    while where < len(new_user_input):
+        new_user_input = new_user_input[where:]
 
         # checks if the user input is string '-1'
         if user_input != '-1':
@@ -349,16 +433,16 @@ while user_input != '-1':
             # calls the word finder function to find the month and check the format of the date in the string
             # takes in the user_input string and every month out of 12 months
             # puts day month and year into list into list user_words if they are found
-            user_words = word_finder(user_input, months[i])
+            split_string = word_finder(new_user_input, months[i])
 
             # checks if user words is an empty list
-            if len(user_words) != 0:
+            if len(split_string) != 0:
 
                 # sets user_month to the first item of the user_ words list
-                user_month = user_words[0]
+                user_month = split_string[0]
 
                 # checks if there is a string for the user_month
-                if user_month != -1:
+                if split_string != -1:
 
                     # sets user_month_value to the value of the month that is found. this number has zeros added
                     user_month_value = month_value[i]
@@ -370,66 +454,24 @@ while user_input != '-1':
                     # sets found_month_digit to the month that is found in the string
                     found_month_digit = month_digit[i]
 
-                    # sets found to 1 because a month in the correct format has been found in the string
-                    found += 1
-
                     # sets list split_string equal to user_words if the list user_words is not empty
-                    if len(user_words) != 0:
-                        split_string = user_words
-        # iterates i
-        i += 1
 
-    # if split_string is an empty list it sets it equal to a list with 3 zeros ast elements
-    if not split_string:
-        split_string = [0, 0, 0]
+                    format_checker(split_string)
 
-    # checks if the first element of split_string is in the list of months
-    # checks if the second element of split_string is in the range of possible days
-    # checks if the third element of split_string is less than or equal to current year
-    # checks if found is not zero or less
-    if split_string[0] in months and int(split_string[1]) < 32 and int(split_string[2]) <= today_year_int and found > 0:
+        # sets input_length to the length of the string new_user_input
+        input_length = len(new_user_input)
 
-        # if statement that occurs if the year found is less than the current year
-        if int(split_string[2]) < today_year_int:
+        # calls the end_finder function to find the end of the
+        # sets where to the location where the found word ends in the string
+        print('where', where)
+        print(negative)
 
-            # sets first element of split_string to the corresponding number with zeros added to single digits
-            split_string[0] = user_month_value
+        where = end_finder(input_length, new_user_input, months[i])
+        if where > negative:
+            break
 
-            # sets second element of split_string to the corresponding number with zeros added to single digits
-            # uses the value of split_string[1] as index to find number. subtracts 1 because index of list starts at 0
-            split_string[1] = days_zeros[int(split_string[1]) - 1]
-
-            # sets third element of split_string to the corresponding number, zeros added to years less than 4 digits
-            # uses the value of split_string[2] as index to find number. subtracts 1 because index of list starts at 0
-            split_string[2] = years_zeros[int(split_string[2]) - 1]
-
-            # joins the elements of split string into as string called join_string
-            join_string = join(split_string)
-
-            # adds the string join_string to the list string_list for final output
-            string_list.append(join_string)
-
-        # if statement that occurs when the year is equal to the current year
-        # checks if the month and day found are less than or equal to the current month and day
-        elif int(split_string[2]) == today_year_int and found_month_digit <= today_month_int and \
-                int(split_string[1]) <= today_day_int:
-
-            # sets first element of split_string to the corresponding number with zeros added to single digits
-            split_string[0] = user_month_value
-
-            # sets second element of split_string to the corresponding number with zeros added to single digits
-            # uses the value of split_string[1] as index to find number. subtracts 1 because index of list starts at 0
-            split_string[1] = days_zeros[int(split_string[1]) - 1]
-
-            # joins the elements of split string into as string called join_string
-            # the third element of split_string is left unchanged
-            # this is because if statement already checks that the third element is equal to the current year
-            join_string = join(split_string)
-
-            # adds join_string to the list string_list for final output
-            string_list.append(join_string)
-    # sets found back to zero to be used in next loop iteration
-    found = 0
+    # iterates i
+    i += 1
 
 # sets i to zero to be used in another loop
 i = 0
