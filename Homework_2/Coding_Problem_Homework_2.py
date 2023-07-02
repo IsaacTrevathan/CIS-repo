@@ -334,7 +334,7 @@ def format_checker(input_list):
 
 
 # opens file inputDates.txt and enters the contents into string user_content
-with open('inputDates.txt', 'r') as my_file:
+with open('/Users/isaac/Desktop/DIS.txt', 'r') as my_file:
     user_content = my_file.read()
 
 
@@ -467,12 +467,15 @@ while i < len(months):
     # iterates i
     i += 1
 
-# sets i to zero to be used in another loop
-i = 0
+# creates and or opens the file parsedDates.txt for writing
+with open('parsedDates.txt', 'w') as my_file:
 
-# while loop that prints the list items of string_list after the loop has been exited with input of '-1'
-while i < len(string_list):
-    print(string_list[i])
+    i = 0
 
-    # iterates i
-    i += 1
+    # while loop that writes the items of string_list into into the file parsedDates.txt and add a new line for each
+    while i < len(string_list):
+        my_file.write(string_list[i])
+        my_file.write('\n')
+
+        # iterates i
+        i += 1
