@@ -334,7 +334,7 @@ def format_checker(input_list):
 
 
 # opens file inputDates.txt and enters the contents into string user_content
-with open('/Users/isaac/Desktop/DIS.txt', 'r') as my_file:
+with open('inputDates.txt', 'r') as my_file:
     user_content = my_file.read()
 
 
