@@ -485,7 +485,7 @@ for item in new_damaged_items_list:
     final_damaged_items_list.append(damaged_items_no_damaged)
 
 # opens Damaged.csv and writes item info for damaged items
-with open('Damaged.csv', 'w') as damaged:
+with open('DamagedInventory.csv', 'w') as damaged:
 
     # iterates for each item in damaged_item_list
     for damage_item in final_damaged_items_list:
@@ -500,7 +500,7 @@ with open('Damaged.csv', 'w') as damaged:
         damaged.write('\n')
 
 # opens PassedDates.csv and writes item info for items with service dates that are passed due
-with open('PassedDates.csv', 'w') as passed_dates:
+with open('PassedServiceDateInventory.csv', 'w') as passed_dates:
 
     # loop that iterates for each item in final_item_list
     for item in final_item_list:
