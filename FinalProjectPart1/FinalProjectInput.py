@@ -49,10 +49,10 @@ class DateInfo:
         the_date = self.get_date()
 
         # for loop that iterates for each user item in the list user_items
-        for element in user_items:
+        for my_element_2 in user_items:
 
             # sets item_date equal to the index 4 of each element of user_items
-            item_date = element[4]
+            item_date = my_element_2[4]
 
             # sets item_string equal to item_date
             item_string = item_date
@@ -77,20 +77,20 @@ class DateInfo:
             # checks if the year value in item_string_list is less than the year value in the_date
             # if it is less then value is appended to passed_due_list
             if item_string_list[2] < the_date[0]:
-                passed_due_list.append(element)
+                passed_due_list.append(my_element_2)
 
             # checks if the year value in item_string_list is equal to the year value in the_date
             # checks if the month value in item_string_list is less than the month value in the_date
             # if it is less then value is appended to passed_due_list
             if item_string_list[2] == the_date[0] and int(item_string_list[0]) < int(self.date_month_value):
-                passed_due_list.append(element)
+                passed_due_list.append(my_element_2)
 
             # checks if the year and month values in item_string_list are equal to the year and month values in the_date
             # checks if the day value in item_string_list is less than the day value in the_date
             # if it is less then value is appended to passed_due_list
             if item_string_list[2] == the_date[0] and int(item_string_list[0]) == int(self.date_month_value) \
                     and int(item_string_list[1]) < int(self.date_day_value):
-                passed_due_list.append(element)
+                passed_due_list.append(my_element_2)
 
         # returns passed_due_list
         return passed_due_list
@@ -115,16 +115,16 @@ def get_damaged_items(user_dict):
     damaged_list = []
 
     # for loop that iterates for each element in user_dict
-    for element in user_dict:
+    for my_element_1 in user_dict:
 
         # sets my_item equal to the element in user_dict
-        my_item = user_dict[element]
+        my_item = user_dict[my_element_1]
 
         # checks the index 5 of my_item to determine if the item is damaged
         if my_item[5] == 'damaged':
 
             # appends the value of user dict element to damaged_list
-            damaged_list.append(user_dict[element])
+            damaged_list.append(user_dict[my_element_1])
 
     # returns damaged_list
     return damaged_list
@@ -174,7 +174,7 @@ passed_date_list = []
 
 # creates empty list earliest_item list for later use
 earliest_item = []
-
+second_manufacturer_list = []
 # uses with and then open to open the file and close when finished. reads the file contents
 with open(user_file, 'r') as my_file:
 
@@ -259,6 +259,7 @@ for item in item_list:
     # checks if manufacturer name is in manufacturer_list. if it is not it appends it
     if item[1] not in manufacturer_list:
         manufacturer_list.append(item[1])
+        second_manufacturer_list.append(item[1])
 
     # checks if manufacturer name is in manufacturer_dict.
     # if not, it creates key value pair of manufacturer name and item information
@@ -513,18 +514,225 @@ with open('PassedServiceDateInventory.csv', 'w') as passed_dates:
 
         # writes new line into file
         passed_dates.write('\n')
-
+final_sorted_list = []
+final_sorted_manufacturer_list = []
 # opens FullInventory.csv and writes item info for items into file
 with open('FullInventory.csv', 'w') as full_inv:
 
-    # loop that iterates for each item in sorted_manufacturer_dict
     for item in sorted_manufacturer_dict:
+        final_sorted_list.append(item)
 
-        # joins item info in item by ' ' into string write_string
-        write_string = ' '.join(sorted_manufacturer_dict[item])
+        if item in sorted_manufacturer_dict[item] and item not in final_sorted_manufacturer_list:
+            final_sorted_manufacturer_list.append(item)
+            final_sorted_manufacturer_list.sort()
+    # loop that iterates for each item in sorted_manufacturer_dict
+    for element in final_sorted_manufacturer_list:
+        for item in new_item_list:
 
-        # writes write_string into file
-        full_inv.write(write_string)
+            if element in item[1]:
+                # joins item info in item by ' ' into string write_string
+                write_string = ' '.join(item)
 
-        # writes new line into file
-        full_inv.write('\n')
+                # writes write_string into file
+                full_inv.write(write_string)
+
+                # writes new line into file
+                full_inv.write('\n')
+
+# creates user_search and sets it equal to '0' for later use
+user_search = '0'
+
+
+# creates empty string search_string_list
+search_string_list = []
+
+
+# creates empty string search_string_check for later use
+search_string_check = ''
+
+# for loop that iterates over each item in item_list
+for item in item_list:
+
+    # iterates over each name in second_manufacturer_list
+    for name in second_manufacturer_list:
+
+        # iterates fro each item type in type_name_list
+        for item_type in type_name_list:
+
+            # if the both the name and type are in the item string
+            # then the name and type are added together in a new string
+            if name in item and item_type in item:
+
+                # adds the manufacturer name and item type together in a string and sets search_string_check equal to it
+                search_string_check = str(name) + ' ' + str(item_type)
+
+                # checks if search_string_check is not in search_string_list
+                if search_string_check not in search_string_list:
+
+                    # adds search_string_check to search_string_list
+                    search_string_list.append(search_string_check)
+
+# creates empty list damaged_IDs
+damaged_IDs = []
+# creates empty list item_search_list
+item_search_list = []
+for my_element in final_damaged_items_list:
+    damaged_IDs.append(my_element[0])
+# creates empty list passed_IDs
+passed_IDs = []
+
+# for loop that adds each item ID from each element of final_item_list to passed_IDS list
+for my_element in final_item_list:
+    passed_IDs.append(my_element[0])
+
+# creates empty list element_split
+element_split = []
+
+# sets max_price equal to zero
+
+# while loop that occurs while user input is not equal to q
+while user_search != 'q':
+
+    # sets up try case for getting correct user input for item search
+    try:
+        # creates list most_expensive_item with all elements equal to '0'
+        most_expensive_item = ['0', '0', '0', '0', '0', '0']
+        max_price = 0
+        search_element_found = 0
+        # sets smallest_difference equal to 100000000000000000000000 for later comparison
+        smallest_difference = 100000000000000000000000
+        # creates variable difference and sets it equal to zero for later use
+        difference = 0
+        # creates empty string item_closest_price for later use
+        item_closest_price = []
+        # creates empty list item_search_list
+        item_search_list = []
+
+        # creates empty list second_item_search_list
+        second_item_search_list = []
+
+        # sets found equal to zero
+        found = 0
+
+        # gets user input for item manufacturer name and type
+        user_search = input('manufacturer and item type')
+
+        # for loop that iterates for each item in search_string_list
+        for my_element in search_string_list:
+
+            # checks if item in search_string_list is in user input string
+            if my_element in user_search:
+                search_element_found += 1
+
+                # splits the manufacturer name and item type from user string into a list based on ' ' character
+                element_split = my_element.split(' ')
+
+                # for loop that iterates for each item in item list
+                for item in item_list:
+
+                    # checks if the manufacturer name and item type are in the item info
+                    # checks if the item ID number is in the damaged or passed due lists
+                    if item[0] not in damaged_IDs and item[0] not in passed_IDs and element_split[0] == item[1] \
+                            and element_split[1] == item[2]:
+
+                        # checks if the item is not in item_search_list
+                        if item not in item_search_list:
+
+                            # adds the item to item_search_list
+                            item_search_list.append(item)
+
+                            # sets most_expensive_item equal to item for later use
+                            if item[3] > most_expensive_item[3]:
+                                most_expensive_item = item
+
+                        # sets found equal to 1
+                        found = 1
+        # raises a value error if the user input string for the item search does not have only one item in it
+        # checks if search_element_found is not equal to one
+        if search_element_found != 1:
+            raise ValueError()
+        # checks if the length of item_search list is equal 1 and found equals 1
+        if len(item_search_list) == 1 and found == 1:
+
+            # prints the item info for the found item
+            for item in item_search_list:
+                print('Your item is:', item[0], item[1], item[2], item[3], item[4], item[5])
+                print()
+
+        # checks if there are multiple items found with the same manufacturer and item type, checks if found equals 1
+        if len(item_search_list) > 1 and found == 1:
+
+            # iterates for each found item in item_search_list
+            for item in item_search_list:
+
+                # checks if the price if the item is greater than the max_price value
+                if int(item[3]) > int(max_price):
+
+                    # sets max_price value equal to item price
+                    max_price = item[3]
+
+                    # sets most_expensive_item equal to item
+
+                    most_expensive_item = item
+
+            # prints out the most expensive item from the item_search_list
+            print('Your item is:', most_expensive_item[0], most_expensive_item[1], most_expensive_item[2],
+                  most_expensive_item[3], most_expensive_item[4], most_expensive_item[5])
+            print()
+
+        # for loop that iterate over each item in item_list
+        for item in item_list:
+
+            # checks if the item info has user search manufacturer name and item type
+            # checks if the item id number is in damaged_IDs or passed_IDs
+            if item[0] not in damaged_IDs and item[0] not in passed_IDs and element_split[0] != item[1] \
+                    and element_split[1] == item[2]:
+
+                # adds item to second_item_search
+                second_item_search_list.append(item)
+
+        # checks if there is only one item in second_item_search_list and if found equals 1
+        if len(second_item_search_list) > 1 and found == 1:
+
+            # iterates for each item in second_item_search_list
+            for item in second_item_search_list:
+
+                # checks if the price of the item is greater than the price of the most expensive item
+                if int(item[3]) > int(most_expensive_item[3]):
+
+                    # calculates the difference in price between the two items to find the closest price item
+                    difference = int(item[3]) - int(most_expensive_item[3])
+
+                # checks if the most_expensive_item price is greater than the item price
+                elif int(most_expensive_item[3]) > int(item[3]):
+
+                    # calculates the difference in price between the two items to find the closest price item
+                    difference = int(most_expensive_item[3]) - int(item[3])
+
+                # checks if the difference calculated between the two items is smaller than smallest_difference
+                if int(difference) < int(smallest_difference):
+
+                    # sets smallest_difference equal to difference
+                    smallest_difference = difference
+
+                    # sets item_closest_price equal to item
+                    item_closest_price = item
+
+            # prints the another item of the same manufacturer name and item type
+            print('You may, also, consider:', item_closest_price[0], item_closest_price[1], item_closest_price[2],
+                  item_closest_price[3], item_closest_price[4], item_closest_price[5])
+            print()
+        # checks if the length of item_search_list is equal to zero
+        # raises a value error
+        if len(item_search_list) == 0 and user_search != 'q':
+            raise ValueError()
+
+        # checks if found is equal to zero showing that no item was found
+        # raises a value error
+        if found == 0 and user_search != 'q':
+            raise ValueError()
+
+    # except case for when a value error was  raised for incorrect input or not found item
+    except ValueError as excpt:
+
+        print('No such item in inventory')
